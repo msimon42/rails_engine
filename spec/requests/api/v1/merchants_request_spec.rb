@@ -4,7 +4,7 @@ RSpec.describe 'merchants api' do
   it 'can get all merchants' do
     create_list :merchant, 5
 
-    get '/api/v1/merchant'
+    get '/api/v1/merchants'
     expect(response).to be_successful
 
     merchants = JSON.parse(response.body)
@@ -14,11 +14,15 @@ RSpec.describe 'merchants api' do
   it 'can get an individual merchant' do
     merchant = create :merchant
 
-    get "/api/v1/merchant/#{merchant.id}"
+    get "/api/v1/merchants/#{merchant.id}"
     expect(response).to be_successful
     data = JSON.parse(response.body)
 
     expect(data['data']['id']).to eq(merchant.id.to_s)
     expect(data['data']['attributes']['name']).to eq(merchant.name)
+  end
+
+  it 'can find an item based on parameter' do
+
   end
 end
