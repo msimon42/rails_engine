@@ -2,12 +2,14 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   namespace :api do
     namespace :v1 do
-      resources :customer, only: [:index, :show]
-      resources :invoice_item, only: [:index, :show]
-      resources :invoice, only: [:index, :show]
-      resources :item, only: [:index, :show]
-      resources :merchant, only: [:index, :show]
-      resources :transaction, only: [:index, :show]
+      resources :customers, only: [:index, :show]
+      resources :invoice_items, only: [:index, :show]
+      resources :invoices, only: [:index, :show]
+      resources :items, only: [:index, :show]
+      resources :merchants, only: [:index, :show] do
+        get '/items', to: 'merchant_items#index'
+      end
+      resources :transactions, only: [:index, :show]
     end
-  end     
+  end
 end
