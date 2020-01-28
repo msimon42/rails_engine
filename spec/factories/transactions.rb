@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :transaction do
-    invoice { nil }
-    credit_card_number { "MyString" }
-    credit_card_expiration_date { "MyString" }
-    result { 1 }
+    invoice { assoication :invoice }
+    credit_card_number { Faker::Business.credit_card_number }
+    credit_card_expiration_date { Faker::Date.forward(days: 500) }
+    result { 'success' }
   end
 end

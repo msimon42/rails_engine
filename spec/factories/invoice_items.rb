@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :invoice_item do
-    invoice { nil }
-    item { nil }
+    invoice { association :invoice }
+    item { association :item }
   end
 end
