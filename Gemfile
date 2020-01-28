@@ -32,6 +32,7 @@ group :development, :test do
   gem 'launchy'
   gem 'simplecov'
   gem 'shoulda-matchers'
+  gem 'pry'
 end
 
 group :development do
@@ -45,3 +46,4 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'factory_bot_rails'
 gem 'faker'
+gem 'fast_jsonapi'
