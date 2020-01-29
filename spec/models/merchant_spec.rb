@@ -26,6 +26,13 @@ RSpec.describe Merchant, type: :model do
       create :invoice_item, invoice: invoice_6, quantity: 10, unit_price: 300000
       create :invoice_item, invoice: invoice_5, quantity: 2, unit_price: 30000
 
+      create :transaction, invoice: invoice_1
+      create :transaction, invoice: invoice_2
+      create :transaction, invoice: invoice_3
+      create :transaction, invoice: invoice_4
+      create :transaction, invoice: invoice_5
+      create :transaction, invoice: invoice_6
+
       expect(Merchant.top_n_by_revenue(2).length).to eq(2)
       expect(Merchant.top_n_by_revenue(2).first).to eq(merchants[2])
       expect(Merchant.top_n_by_revenue(2).last).to eq(merchants[1])

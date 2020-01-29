@@ -62,6 +62,13 @@ RSpec.describe 'merchants api' do
     create :invoice_item, invoice: invoice_6, quantity: 10, unit_price: 300000
     create :invoice_item, invoice: invoice_5, quantity: 2, unit_price: 30000
 
+    create :transaction, invoice: invoice_1
+    create :transaction, invoice: invoice_2
+    create :transaction, invoice: invoice_3
+    create :transaction, invoice: invoice_4
+    create :transaction, invoice: invoice_5
+    create :transaction, invoice: invoice_6
+
     get "/api/v1/merchants/most_revenue?quantity=2"
 
     expect(response).to be_successful
