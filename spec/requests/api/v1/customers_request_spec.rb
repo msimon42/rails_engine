@@ -29,12 +29,17 @@ RSpec.describe 'customers api' do
       @customer = create :customer
       @invoices = create_list :invoice, 10, customer: @customer
       create_list :invoice, 2
-      @transactions = create_list :transaction, invoice: @invoice
+      @transactions = create_list :transaction, 10, invoice: @invoices[0]
       create_list :transaction, 2
     end
 
     it 'can get all invoices' do
+      get "/api/v1/customers/#{@customer.id}/invoices"
 
+      expect(response).to be_successful
+      data = JSON.parse(response.body)
+
+      expect(data['data']['attributes']['invoices'].count).to eq(10)
     end
 
     it 'can get all transactions' do
