@@ -40,6 +40,6 @@ RSpec.describe 'customers api' do
     get "/api/v1/customers/find_all?last_name=Gonzalez"
     expect(response).to be_successful
     data = JSON.parse(response.body)
-    expect(data.length).to eq(3)
+    expect(data['data'].length).to eq(3)
   end
 end

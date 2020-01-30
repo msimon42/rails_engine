@@ -10,8 +10,7 @@ RSpec.describe 'transactions api' do
 
     expect(response).to be_successful
     transactions = JSON.parse(response.body)
-
-    expect(transactions.length).to eq(10)
+    expect(transactions['data'].length).to eq(10)
   end
 
   it 'can get an individual' do
@@ -41,6 +40,6 @@ RSpec.describe 'transactions api' do
     get "/api/v1/transactions/find_all?credit_card_number=1829493918374983"
     expect(response).to be_successful
     data = JSON.parse(response.body)
-    expect(data.length).to eq(3)
+    expect(data['data'].length).to eq(3)
   end
 end

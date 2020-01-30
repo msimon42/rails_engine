@@ -42,6 +42,6 @@ RSpec.describe 'invoice_items api' do
     get "/api/v1/invoice_items/find_all?item_id=#{item.id}"
     expect(response).to be_successful
     data = JSON.parse(response.body)
-    expect(data.length).to eq(3)
+    expect(data['data'].length).to eq(3)
   end
 end

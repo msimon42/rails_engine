@@ -98,9 +98,9 @@ RSpec.describe 'merchants api' do
     merchant_3 = create :merchant
     merchant_4 = create :merchant
 
-    get "/api/v1/transactions/find_all?name=WilliamsonGroup"
+    get "/api/v1/merchants/find_all?name=WilliamsonGroup"
     expect(response).to be_successful
     data = JSON.parse(response.body)
-    expect(data.length).to eq(2)
+    expect(data['data'].length).to eq(2)
   end
 end

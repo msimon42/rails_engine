@@ -34,14 +34,14 @@ RSpec.describe 'items api' do
   end
 
   it 'can find all' do
-    item_1 = create :item, price: 5000
-    item_2 = create :item, price: 5000
-    item_3 = create :item, price: 5000
-    item_4 = create :item, price: 3452
+    item_1 = create :item, unit_price: 5000
+    item_2 = create :item, unit_price: 5000
+    item_3 = create :item, unit_price: 5000
+    item_4 = create :item, unit_price: 3452
 
-    get "/api/v1/items/find_all?price=5000"
+    get "/api/v1/items/find_all?unit_price=5000"
     expect(response).to be_successful
     data = JSON.parse(response.body)
-    expect(data.length).to eq(3)
+    expect(data['data'].length).to eq(3)
   end
 end
