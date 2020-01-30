@@ -18,7 +18,10 @@ Rails.application.routes.draw do
       get '/customers/find_all', to: 'customers#find_all'
       get '/merchants/find_all', to: 'merchants#find_all'
 
-      resources :customers, only: [:index, :show]
+      resources :customers, only: [:index, :show] do
+        get '/invoices', to: 'customer_invoices#index'
+        get '/transactions', to: 'customer_transactions#index'
+      end
       resources :invoice_items, only: [:index, :show]
       resources :invoices, only: [:index, :show]
       resources :items, only: [:index, :show]
