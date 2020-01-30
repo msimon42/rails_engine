@@ -32,4 +32,17 @@ RSpec.describe 'invoices api' do
     data = JSON.parse(response.body)
     expect(data['data']['id']).to eq(invoice.id.to_s)
   end
+
+  it 'can find all' do
+    merchant = create :merchant
+    invoice_1 = create :invoice, merchant: merchant
+    invoice_2 = create :invoice, merchant: merchant
+    invoice_3 = create :invoice, merchant: merchant
+    invoice_3 = create :invoice
+
+    get "/api/v1/transactions/find_all?merchant_id=#{merchant.id}"
+    expect(response).to be_successful
+    data = JSON.parse(response.body)
+    expect(data.length).to eq(3)
+  end
 end

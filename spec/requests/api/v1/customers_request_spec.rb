@@ -30,4 +30,16 @@ RSpec.describe 'customers api' do
     data = JSON.parse(response.body)
     expect(data['data']['id']).to eq(customer.id.to_s)
   end
+
+  it 'can find all' do
+    customer_1 = create :customer, last_name: 'Gonzalez'
+    customer_2 = create :customer, last_name: 'Gonzalez'
+    customer_3 = create :customer, last_name: 'Gonzalez'
+    customer_4 = create :customer, last_name: 'Smith'
+
+    get "/api/v1/customers/find_all?last_name=Gonzalez"
+    expect(response).to be_successful
+    data = JSON.parse(response.body)
+    expect(data.length).to eq(3)
+  end
 end
