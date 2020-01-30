@@ -1,33 +1,50 @@
 require 'rails_helper'
 RSpec.describe 'customers api' do
-  before :each do
-    @customers = create_list :customer, 10
+  describe 'index show' do
+    before :each do
+      @customers = create_list :customer, 10
+    end
+
+    it 'can get all customers' do
+      get "/api/v1/customers"
+
+      expect(response).to be_successful
+      customers = JSON.parse(response.body)
+
+      expect(@customers.length).to eq(10)
+    end
+
+    it 'can get an individual' do
+      get "/api/v1/customers/#{@customers[0].id}"
+      expect(response).to be_successful
+      customer = JSON.parse(response.body)
+
+      expect(customer['data']['attributes']['first_name']).to eq(@customers[0].first_name)
+      expect(customer['data']['id']).to eq(@customers[0].id.to_s)
+    end
   end
 
-  it 'can get all customers' do
-    get "/api/v1/customers"
+  describe 'relationships' do
+    before :each do
+      @customer = create :customer
+      @invoices = create_list :invoice, 10, customer: @customer
+      create_list :invoice, 2
+      @transactions = create_list :transaction, invoice: @invoice
+      create_list :transaction, 2
+    end
 
-    expect(response).to be_successful
-    customers = JSON.parse(response.body)
+    it 'can get all invoices' do
 
-    expect(@customers.length).to eq(10)
-  end
+    end
 
-  it 'can get an individual' do
-    get "/api/v1/customers/#{@customers[0].id}"
-    expect(response).to be_successful
-    customer = JSON.parse(response.body)
+    it 'can get all transactions' do
+      get "/api/v1/customers/#{@customer.id}/transactions"
 
-    expect(customer['data']['attributes']['first_name']).to eq(@customers[0].first_name)
-    expect(customer['data']['id']).to eq(@customers[0].id.to_s)
-  end
+      expect(response).to be_successful
+      data = JSON.parse(response.body)
 
-  it 'can get all invoices' do
-
-  end
-
-  it 'can get all transactions' do
-
+      expect(data['data']['attributes']['transactions'].count).to eq(10)
+    end
   end
 
   it 'can find_by' do
