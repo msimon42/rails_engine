@@ -22,6 +22,14 @@ RSpec.describe 'customers api' do
     expect(customer['data']['id']).to eq(@customers[0].id.to_s)
   end
 
+  it 'can get all invoices' do
+
+  end
+
+  it 'can get all transactions' do
+
+  end
+
   it 'can find_by' do
     customer = create :customer, first_name: 'matt'
 
