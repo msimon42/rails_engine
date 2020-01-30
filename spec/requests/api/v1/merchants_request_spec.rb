@@ -82,4 +82,13 @@ RSpec.describe 'merchants api' do
     top_merchants_2 = JSON.parse(response.body)
     expect(top_merchants_2['data'].last['id'].to_i).to eq(merchants[0].id)
   end
+
+  it 'can find_by' do
+    merchant = create :merchant, name: 'matt'
+
+    get "/api/v1/merchants/find?name=matt"
+    expect(response).to be_successful
+    data = JSON.parse(response.body)
+    expect(data['data']['id']).to eq(merchant.id.to_s)
+  end
 end

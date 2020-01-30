@@ -23,4 +23,13 @@ RSpec.describe 'items api' do
     expect(item['data']['attributes']['description']).to eq(@items[0].description)
     expect(item['data']['id']).to eq(@items[0].id.to_s)
   end
+
+  it 'can find_by' do
+    item = create :item, name: 'widget123'
+
+    get "/api/v1/items/find?name=widget123"
+    expect(response).to be_successful
+    data = JSON.parse(response.body)
+    expect(data['data']['id']).to eq(item.id.to_s)
+  end
 end
