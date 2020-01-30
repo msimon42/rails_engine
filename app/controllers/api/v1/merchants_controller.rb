@@ -14,4 +14,8 @@ class Api::V1::MerchantsController < ApplicationController
   def find
     render json: MerchantSerializer.new(Merchant.find_by(request.query_parameters))
   end
+
+  def find_all
+    render json: MerchantSerializer.new(Merchant.where(request.query_parameters))
+  end
 end

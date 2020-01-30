@@ -10,4 +10,8 @@ class Api::V1::InvoicesController < ApplicationController
   def find
     render json: InvoiceSerializer.new(Invoice.find_by(request.query_parameters))
   end
+
+  def find_all
+    render json: InvoiceSerializer.new(Invoice.where(request.query_parameters))
+  end
 end

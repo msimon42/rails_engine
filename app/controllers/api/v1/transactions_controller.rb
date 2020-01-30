@@ -10,4 +10,8 @@ class Api::V1::TransactionsController < ApplicationController
   def find
     render json: TransactionSerializer.new(Transaction.find_by(request.query_parameters))
   end
+
+  def find_all
+    render json: TransactionSerializer.new(Transaction.where(request.query_parameters))
+  end
 end

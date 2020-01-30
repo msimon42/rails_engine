@@ -10,4 +10,8 @@ class Api::V1::CustomersController < ApplicationController
   def find
     render json: CustomerSerializer.new(Customer.find_by(request.query_parameters))
   end
+
+  def find_all
+    render json: CustomerSerializer.new(Customer.where(request.query_parameters))
+  end
 end
