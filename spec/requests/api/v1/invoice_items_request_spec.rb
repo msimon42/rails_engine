@@ -38,7 +38,7 @@ RSpec.describe 'invoice_items api' do
       expect(response).to be_successful
       data = JSON.parse(response.body)
 
-      expect(data['data']['attributes']['id']).to eq(@invoice.id.to_s)
+      expect(data['data']['attributes']['id']).to eq(@invoice.id)
     end
 
     it 'can get items' do
@@ -47,7 +47,7 @@ RSpec.describe 'invoice_items api' do
       expect(response).to be_successful
       data = JSON.parse(response.body)
 
-      expect(data['data']['attributes']['id']).to eq(@item.id.to_s)
+      expect(data['data']['attributes']['id']).to eq(@item.id)
     end
   end
 
