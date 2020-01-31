@@ -24,11 +24,12 @@ RSpec.describe 'invoices api' do
       expect(invoice['data']['id']).to eq(@invoices[0].id.to_s)
     end
   end
-
   describe 'relationships' do
     before :each do
       @customer = create :customer
       @merchant = create :merchant
+      @invoice = create :invoice, customer: @customer, merchant: @merchant
+    end
   end
 
   it 'can find_by' do
