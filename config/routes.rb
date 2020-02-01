@@ -5,6 +5,8 @@ Rails.application.routes.draw do
       get '/merchants/most_revenue', to: 'merchants#most_revenue'
       get '/merchants/revenue', to: 'merchants_revenue#show'
 
+      get '/items/most_revenue', to: 'items#most_revenue'
+
       get '/invoices/find', to: 'invoices#find'
       get '/items/find', to: 'items#find'
       get '/transactions/find', to: 'transactions#find'
