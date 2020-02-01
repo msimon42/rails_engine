@@ -6,9 +6,11 @@ class Invoice < ApplicationRecord
   has_many :items, through: :invoice_items
 
   def self.revenue_by_date(date)
-    where(created_at: Time.zone.parse(date)..Time.zone.parse(date).next_day)
+    result = where(created_at: Time.zone.parse(date)..Time.zone.parse(date).next_day)
       .joins(:invoice_items, :transactions)
       .merge(Transaction.successful)
       .sum('quantity * unit_price')
+
+    result.to_f / 100  
   end
 end
