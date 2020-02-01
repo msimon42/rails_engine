@@ -13,4 +13,16 @@ class Merchant < ApplicationRecord
           .order('revenue DESC')
           .limit(n)
   end
+
+  def favorite_customer
+    customer = Customer.select('customers.*, count(transactions.id) AS total_successful_transactions')
+      .joins(:merchants, :transactions)
+      .merge(Transaction.successful)
+      .where('invoices.merchant_id = ?', self.id)
+      .group('customers.id')
+      .order('total_successful_transactions DESC')
+      .limit(1)
+
+    customer.first  
+  end
 end
