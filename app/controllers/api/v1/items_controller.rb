@@ -14,4 +14,8 @@ class Api::V1::ItemsController < ApplicationController
   def find_all
     render json: ItemSerializer.new(Item.where(request.query_parameters))
   end
+
+  def most_revenue
+    render json: ItemSerializer.new(Item.top_n_by_revenue(params[:quantity]))
+  end
 end
