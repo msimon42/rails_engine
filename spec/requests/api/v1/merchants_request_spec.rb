@@ -1,36 +1,40 @@
 require 'rails_helper'
 
 RSpec.describe 'merchants api' do
-  it 'can get all merchants' do
-    create_list :merchant, 5
+  describe 'index show' do
+    it 'can get all merchants' do
+      create_list :merchant, 5
 
-    get '/api/v1/merchants'
-    expect(response).to be_successful
+      get '/api/v1/merchants'
+      expect(response).to be_successful
 
-    merchants = JSON.parse(response.body)
-    expect(merchants['data'].length).to eq(5)
+      merchants = JSON.parse(response.body)
+      expect(merchants['data'].length).to eq(5)
+    end
   end
 
-  it 'can get an individual merchant' do
-    merchant = create :merchant
+  describe 'relationships' do
+    it 'can get an individual merchant' do
+      merchant = create :merchant
 
-    get "/api/v1/merchants/#{merchant.id}"
-    expect(response).to be_successful
-    data = JSON.parse(response.body)
+      get "/api/v1/merchants/#{merchant.id}"
+      expect(response).to be_successful
+      data = JSON.parse(response.body)
 
-    expect(data['data']['id']).to eq(merchant.id.to_s)
-    expect(data['data']['attributes']['name']).to eq(merchant.name)
-  end
+      expect(data['data']['id']).to eq(merchant.id.to_s)
+      expect(data['data']['attributes']['name']).to eq(merchant.name)
+    end
 
-  it 'can get all items associated with merchant' do
-    merchant = create :merchant
-    items = create_list :item, 10, merchant: merchant
+    it 'can get all items associated with merchant' do
+      merchant = create :merchant
+      items = create_list :item, 10, merchant: merchant
 
-    get "/api/v1/merchants/#{merchant.id}/items"
-    expect(response).to be_successful
+      get "/api/v1/merchants/#{merchant.id}/items"
+      expect(response).to be_successful
 
-    data = JSON.parse(response.body)
-    expect(data['data']['attributes']['items'].count).to eq(10)
+      data = JSON.parse(response.body)
+      expect(data['data']['attributes']['items'].count).to eq(10)
+    end
   end
 
   it 'can get all invoices associated with merchant' do
@@ -102,5 +106,27 @@ RSpec.describe 'merchants api' do
     expect(response).to be_successful
     data = JSON.parse(response.body)
     expect(data['data'].length).to eq(2)
+  end
+
+  it 'can get favorite customer by merchant' do
+    merchant = create :merchant
+    customers = create_list :customer, 10
+    invoices_1 = create_list :invoice, 3, customer: customers[0], merchant: merchant
+    invoices_2 = create_list :invoice, 2, customer: customers[1], merchant: merchant
+
+    invoices_1.each do |invoice|
+      create :transaction, invoice: invoice
+    end
+
+    invoices_2.each do |invoice|
+      create :transaction, invoice: invoice
+    end
+
+    get "/api/v1/merchants/#{merchant.id}/favorite_customer"
+
+    expect(response).to be_successful
+    customer = JSON.parse(response.body)
+
+    expect(customer['data']['id']).to eq(customers[0].id.to_s)
   end
 end
