@@ -12,7 +12,7 @@ class Api::V1::ItemsController < ApplicationController
   end
 
   def find_all
-    render json: ItemSerializer.new(Item.where(request.query_parameters))
+    render json: ItemSerializer.new(Item.where(request.query_parameters).order(id: :asc))
   end
 
   def most_revenue

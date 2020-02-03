@@ -12,6 +12,6 @@ class Api::V1::InvoiceItemsController < ApplicationController
   end
 
   def find_all
-    render json: InvoiceItemSerializer.new(InvoiceItem.where(request.query_parameters))
+    render json: InvoiceItemSerializer.new(InvoiceItem.where(request.query_parameters).order(id: :asc))
   end
 end

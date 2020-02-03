@@ -12,6 +12,6 @@ class Api::V1::TransactionsController < ApplicationController
   end
 
   def find_all
-    render json: TransactionSerializer.new(Transaction.where(request.query_parameters))
+    render json: TransactionSerializer.new(Transaction.where(request.query_parameters).order(id: :asc))
   end
 end

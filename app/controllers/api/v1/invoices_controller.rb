@@ -12,7 +12,7 @@ class Api::V1::InvoicesController < ApplicationController
   end
 
   def find_all
-    render json: InvoiceSerializer.new(Invoice.where(request.query_parameters))
+    render json: InvoiceSerializer.new(Invoice.where(request.query_parameters).order(id: :asc))
   end
 
   def items
