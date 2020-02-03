@@ -13,10 +13,10 @@ RSpec.describe Invoice, type: :model do
     it 'revenue_by_date' do
       merchants = create_list :merchant, 3
 
-      invoice_1 = create :invoice, merchant: merchants[0], created_at: Time.new
-      invoice_2 = create :invoice, merchant: merchants[0], created_at: Time.new
-      invoice_3 = create :invoice, merchant: merchants[1], created_at: Time.new
-      invoice_4 = create :invoice, merchant: merchants[1], created_at: Time.new
+      invoice_1 = create :invoice, merchant: merchants[0], created_at: Time.parse('2020-02-01')
+      invoice_2 = create :invoice, merchant: merchants[0], created_at: Time.parse('2020-02-01')
+      invoice_3 = create :invoice, merchant: merchants[1], created_at: Time.parse('2020-02-01')
+      invoice_4 = create :invoice, merchant: merchants[1], created_at: Time.parse('2020-02-01')
       invoice_5 = create :invoice, merchant: merchants[2], created_at: Time.parse('2019-12-14')
       invoice_6 = create :invoice, merchant: merchants[2], created_at: Time.parse('2019-12-14')
 
@@ -35,9 +35,7 @@ RSpec.describe Invoice, type: :model do
       create :transaction, invoice: invoice_5
       create :transaction, invoice: invoice_6
 
-      expect(Invoice.revenue_by_date(Time.new.to_s)).to eq(1821.25)
-
-
+      expect(Invoice.revenue_by_date('2020-02-01')).to eq(1821.25)
     end
   end
 end
