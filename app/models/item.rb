@@ -12,4 +12,8 @@ class Item < ApplicationRecord
         .order('revenue DESC')
         .limit(n)
   end
+
+  def best_day
+    invoices.top_day_by_revenue
+  end
 end
