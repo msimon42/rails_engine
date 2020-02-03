@@ -56,7 +56,7 @@ RSpec.describe 'invoices api' do
       expect(response).to be_successful
       data = JSON.parse(response.body)
 
-      expect(data['data']['attributes']['invoice_items']).length eq(5)
+      expect(data['data'].length).to eq(5)
     end
   end
 
