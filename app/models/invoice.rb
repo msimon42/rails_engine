@@ -10,8 +10,6 @@ class Invoice < ApplicationRecord
       .joins(:invoice_items, :transactions)
       .merge(Transaction.successful)
       .sum('quantity * unit_price')
-
-    result.to_f / 100
   end
 
   def self.top_day_by_revenue
@@ -22,7 +20,7 @@ class Invoice < ApplicationRecord
       .order('revenue DESC')
       .order('date DESC')
       .limit(1)
-      
+
     result.first.date.strftime('%F')
 
   end
