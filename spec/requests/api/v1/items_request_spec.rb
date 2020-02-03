@@ -63,6 +63,19 @@ RSpec.describe 'items api' do
 
       expect(data['data']['id']).to eq(merchant.id.to_s)
     end
+
+    it 'can get invoice_items' do
+      it 'can get merchant' do
+        item = create :item
+        create_list :invoice_item, 5
+
+        get "/api/v1/items/#{item.id}/invoice_items"
+
+        expect(response).to be_successful
+        data = JSON.parse(response.body)
+
+        expect(data['data'].length).to eq(5)
+    end
   end
 
   it 'can get top items by revenue' do
