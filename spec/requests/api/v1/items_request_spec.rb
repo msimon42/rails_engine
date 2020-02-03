@@ -47,8 +47,6 @@ RSpec.describe 'items api' do
       data = JSON.parse(response.body)
       expect(data['data'].length).to eq(3)
     end
-
-
   end
 
   describe 'relationships' do
@@ -65,9 +63,8 @@ RSpec.describe 'items api' do
     end
 
     it 'can get invoice_items' do
-      it 'can get merchant' do
         item = create :item
-        create_list :invoice_item, 5
+        create_list :invoice_item, 5, item: item
 
         get "/api/v1/items/#{item.id}/invoice_items"
 
