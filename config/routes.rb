@@ -4,8 +4,10 @@ Rails.application.routes.draw do
     namespace :v1 do
       get '/merchants/most_revenue', to: 'merchants#most_revenue'
       get '/merchants/revenue', to: 'merchants_revenue#show'
+      get '/merchants/:id/favorite_customer', to: 'merchant_customers#show'
 
       get '/items/most_revenue', to: 'items#most_revenue'
+      get '/items/:id/best_day', to: 'items#best_day'
 
       get '/invoices/find', to: 'invoices#find'
       get '/items/find', to: 'items#find'
@@ -31,8 +33,15 @@ Rails.application.routes.draw do
         get '/invoice', to: 'invoice_item_invoice#show'
       end
 
-      resources :invoices, only: [:index, :show]
-      resources :items, only: [:index, :show]
+      resources :invoices, only: [:index, :show] do
+        get '/customer', to: 'invoice_customer#show'
+        get '/merchant', to: 'invoice_merchant#show'
+        get '/invoice_items', to: 'invoice_invoice_items#show'
+      end
+
+      resources :items, only: [:index, :show] do
+        get '/merchant', to: 'item_merchant#show'
+      end
 
       resources :merchants, only: [:index, :show] do
         get '/items', to: 'merchant_items#index'
