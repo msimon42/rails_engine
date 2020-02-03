@@ -29,6 +29,34 @@ RSpec.describe 'invoices api' do
       @customer = create :customer
       @merchant = create :merchant
       @invoice = create :invoice, customer: @customer, merchant: @merchant
+      @invoice_items = create_list :invoice_item, 5, invoice: @invoice
+    end
+
+    it 'can get customer' do
+      get "/api/v1/invoices/#{@invoice.id}/customer"
+
+      expect(response).to be_successful
+      data = JSON.parse(response.body)
+
+      expect(data['data']['id']).to eq(@customer.id.to_s)
+    end
+
+    it 'can get merchant' do
+      get "/api/v1/invoices/#{@invoice.id}/merchant"
+
+      expect(response).to be_successful
+      data = JSON.parse(response.body)
+
+      expect(data['data']['id']).to eq(@merchant.id.to_s)
+    end
+
+    it 'can get invoice items' do
+      get "/api/v1/invoices/#{@invoice.id}/invoice_items"
+
+      expect(response).to be_successful
+      data = JSON.parse(response.body)
+
+      expect(data['data']['attributes']['invoice_items']).length eq(5)
     end
   end
 
