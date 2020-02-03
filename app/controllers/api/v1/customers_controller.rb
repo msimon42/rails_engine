@@ -14,4 +14,8 @@ class Api::V1::CustomersController < ApplicationController
   def find_all
     render json: CustomerSerializer.new(Customer.where(request.query_parameters).order(id: :asc))
   end
+
+  def favorite_merchant
+    render json: MerchantSerializer.new(Customer.find(params[:id]).favorite_merchant)
+  end
 end
