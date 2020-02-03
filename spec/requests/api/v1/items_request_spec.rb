@@ -26,7 +26,7 @@ RSpec.describe 'items api' do
     end
   end
 
-  describe 'relationships' do
+  describe 'find' do
     it 'can find_by' do
       item = create :item, name: 'widget123'
 
@@ -46,6 +46,22 @@ RSpec.describe 'items api' do
       expect(response).to be_successful
       data = JSON.parse(response.body)
       expect(data['data'].length).to eq(3)
+    end
+
+
+  end
+
+  describe 'relationships' do
+    it 'can get merchant' do
+      merchant = create :merchant
+      item = create :item, merchant: merchant
+
+      get "/api/v1/items/#{item.id}/merchant"
+
+      expect(response).to be_successful
+      data = JSON.parse(response.body)
+
+      expect(data['data']['id']).to eq(merchant.id.to_s)
     end
   end
 
