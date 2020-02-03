@@ -6,10 +6,10 @@ class Merchant < ApplicationRecord
   has_many :customers, through: :invoices
 
   def self.top_n_by_revenue(n)
-    result = joins(:invoice_items, :transactions)
+      joins(invoices: [:invoice_items, :transactions])
           .select('merchants.*, sum(invoice_items.unit_price * invoice_items.quantity) AS revenue')
-          .group(:id)
           .merge(Transaction.successful)
+          .group(:id)
           .order('revenue desc')
           .limit(n)
   end
