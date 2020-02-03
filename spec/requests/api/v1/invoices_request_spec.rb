@@ -28,8 +28,14 @@ RSpec.describe 'invoices api' do
     before :each do
       @customer = create :customer
       @merchant = create :merchant
+      @items = create_list :item, 5, merchant: @merchant
       @invoice = create :invoice, customer: @customer, merchant: @merchant
-      @invoice_items = create_list :invoice_item, 5, invoice: @invoice
+
+      @items.each do |item|
+        @invoice_items = create_list :invoice_item, 1, invoice: @invoice, item: item
+      end
+
+      @transactions = create_list :transaction, 3, invoice: @invoice
     end
 
     it 'can get customer' do
@@ -52,6 +58,24 @@ RSpec.describe 'invoices api' do
 
     it 'can get invoice items' do
       get "/api/v1/invoices/#{@invoice.id}/invoice_items"
+
+      expect(response).to be_successful
+      data = JSON.parse(response.body)
+
+      expect(data['data'].length).to eq(5)
+    end
+
+    it 'can get transactions' do
+      get "/api/v1/invoices/#{@invoice.id}/transactions"
+
+      expect(response).to be_successful
+      data = JSON.parse(response.body)
+
+      expect(data['data'].length).to eq(3)
+    end
+
+    it 'can get items' do
+      get "/api/v1/invoices/#{@invoice.id}/items"
 
       expect(response).to be_successful
       data = JSON.parse(response.body)

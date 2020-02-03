@@ -33,7 +33,7 @@ RSpec.describe 'merchants api' do
       expect(response).to be_successful
 
       data = JSON.parse(response.body)
-      expect(data['data']['attributes']['items'].count).to eq(10)
+      expect(data['data'].count).to eq(10)
     end
   end
 
@@ -45,7 +45,7 @@ RSpec.describe 'merchants api' do
     expect(response).to be_successful
 
     data = JSON.parse(response.body)
-    expect(data['data']['attributes']['invoices'].count).to eq(10)
+    expect(data['data'].count).to eq(10)
   end
 
   it 'can obtain top n merchants based on revenue' do

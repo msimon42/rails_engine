@@ -1,4 +1,6 @@
 class Item < ApplicationRecord
+  include ConvertToDollars
+  before_validation :convert_to_dollars
   belongs_to :merchant
   has_many :invoice_items
   has_many :invoices, through: :invoice_items

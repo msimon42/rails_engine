@@ -39,7 +39,7 @@ RSpec.describe 'customers api' do
       expect(response).to be_successful
       data = JSON.parse(response.body)
 
-      expect(data['data']['attributes']['invoices'].count).to eq(10)
+      expect(data['data'].count).to eq(10)
     end
 
     it 'can get all transactions' do
@@ -48,7 +48,7 @@ RSpec.describe 'customers api' do
       expect(response).to be_successful
       data = JSON.parse(response.body)
 
-      expect(data['data']['attributes']['transactions'].count).to eq(10)
+      expect(data['data'].count).to eq(10)
     end
   end
 

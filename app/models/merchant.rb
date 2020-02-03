@@ -6,11 +6,11 @@ class Merchant < ApplicationRecord
   has_many :customers, through: :invoices
 
   def self.top_n_by_revenue(n)
-    select('merchants.*, sum(invoice_items.unit_price * invoice_items.quantity) AS revenue')
-          .joins(:invoice_items, :transactions)
-          .merge(Transaction.successful)
+    result = joins(:invoice_items, :transactions)
+          .select('merchants.*, sum(invoice_items.unit_price * invoice_items.quantity) AS revenue')
           .group(:id)
-          .order('revenue DESC')
+          .merge(Transaction.successful)
+          .order('revenue desc')
           .limit(n)
   end
 
@@ -23,6 +23,6 @@ class Merchant < ApplicationRecord
       .order('total_successful_transactions DESC')
       .limit(1)
 
-    customer.first  
+    customer.first
   end
 end
